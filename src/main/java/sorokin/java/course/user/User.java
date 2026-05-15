@@ -1,26 +1,50 @@
 package sorokin.java.course.user;
 
-import java.util.List;
-
+import jakarta.persistence.*;
+import org.hibernate.annotations.NaturalId;
 import sorokin.java.course.account.Account;
 
+import java.util.ArrayList;
+import java.util.List;
+
+@Entity
+@Table(name = "users")
 public class User {
-    private final int id;
-    private final String login;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @NaturalId
+    @Column(nullable = false, unique = true)
+    private String login;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Account> accountList;
 
-    public User(int id, String login, List<Account> accountList) {
-        this.id = id;
+    public User(String login) {
+        this();
         this.login = login;
-        this.accountList = accountList;
     }
 
-    public int getId() {
+    public User() {
+        this.accountList = new ArrayList<>();
+    }
+
+    public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getLogin() {
         return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
     }
 
     public List<Account> getAccountList() {
