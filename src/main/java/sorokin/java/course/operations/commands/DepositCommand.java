@@ -19,7 +19,7 @@ public class DepositCommand implements OperationCommand {
 
     @Override
     public void execute() {
-        int accountId = consoleInput.readPositiveInt("Enter account id:", "account id");
+        long accountId = consoleInput.readPositiveInt("Enter account id:", "account id");
         int amount = consoleInput.readPositiveInt("Enter amount:", "amount");
 
         accountService.deposit(accountId, amount);
